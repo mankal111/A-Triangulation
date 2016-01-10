@@ -6,6 +6,10 @@ $( "#new-point-btn" ).click(function(){
   $( "#new-pair-btn"+points+"" ).click(function(){
     $(this).parents("div:first").before('<form class="form-inline" role="form"><div class="form-group"><label for="angle"><h5>Angle:</label><input type="text" class="form-control" id="angle" size="5">π</h5></div>&nbsp;<div class="form-group"><label for="point"><h5>Points to point:</label><input type="number" class="form-control" id="point" maxlength="4"></h5></div></form>');
   });
+
+  $( "#del-pair-btn"+points+"" ).click(function(){
+    $(this).parents("div:first").prev().remove();
+  });
 });
 
 $( "#del-point-btn" ).click(function(){
