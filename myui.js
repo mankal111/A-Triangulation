@@ -19,4 +19,21 @@ $( "#del-point-btn" ).click(function(){
   }
 });
 
-$( "#draw-btn" ).click(initializeTrigFromPage);
+var getTrigFromPage = function(){
+  atrig = {};
+  $( '#accordion' ).children().each(function(pointIndexmo){
+    var pointIndex = pointIndexmo+1;
+    s = $('#collapse'+(pointIndex)+ ' .form-inline');
+    atrig[pointIndex]=[];
+    for (var i=0; i<s.length; i++){
+      newAngle = parseFloat($('#angle', s[i]).val());
+      newPoint = $('#point', s[i]).val();
+      atrig[pointIndex][i]=[newAngle, newPoint];
+    }
+  });
+  console.log(JSON.stringify(atrig));
+  return atrig;
+};
+
+$( "#draw-btn" ).click(getTrigFromPage);
+
