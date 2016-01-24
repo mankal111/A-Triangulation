@@ -1,3 +1,6 @@
+myui = {};
+
+(function(myui){
 var points = 0;
 
 $( "#new-point-btn" ).click(function(){
@@ -19,7 +22,7 @@ $( "#del-point-btn" ).click(function(){
   }
 });
 
-var getTrigFromPage = function(){
+myui.getTrigFromPage = function(){
   atrig = {};
   $( '#accordion' ).children().each(function(pointIndexmo){
     var pointIndex = pointIndexmo+1;
@@ -35,5 +38,5 @@ var getTrigFromPage = function(){
   return atrig;
 };
 
-$( "#draw-btn" ).click(getTrigFromPage);
-
+$( "#draw-btn" ).click(myui.getTrigFromPage);
+})(myui);
