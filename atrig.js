@@ -35,3 +35,24 @@ APoint.prototype.toString = function(){
   }
   return str;
 };
+
+//A-Triangulation class
+var ATriangulation = function(dataObj){
+  points = {};
+  for (var point in dataObj){
+    points[point] = new APoint();
+  }
+  for (point in dataObj){
+    points[point].addAEdges(dataObj[point]);
+  }
+  console.log(points);
+};
+//To string method
+ATriangulation.prototype.toString = function(){
+  var str = "";
+  console.log(this.points);
+  for (var point in this.points){
+    str += "point " + point  + ":\n----------------\n" + this.points[point].toString();
+  }
+  return str;
+};
