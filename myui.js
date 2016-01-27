@@ -39,7 +39,7 @@ myui.getTrigFromPage = function(){
 
 myui.drawATriangulation = function(){
   ATriang = new ATriangulation(myui.getTrigFromPage());
-  console.log(ATriang.toString());
+  console.log(ATriang);
 };
 
 $( "#draw-btn" ).click(myui.drawATriangulation);

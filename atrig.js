@@ -6,7 +6,7 @@ var AEdge = function(angle, point){
 };
 //To String method
 AEdge.prototype.toString = function(){
-  return "Points with angle "+this.angle+" to point "+this.point+".";
+  return "Points with angle "+this.angle+" to point.";
 };
 
 //A-Point class
@@ -14,7 +14,7 @@ var APoint = function(){
   this.AEdges = [];
 };
 //Method that adds A-Edges from array of pairs to APoint, as AEdges objects.
-APoint.prototype.addAEdges = function(AEdgesAr){
+APoint.prototype.addAEdges = function(AEdgesAr, points){
   //sorts the array
   AEdgesAr.sort( function(a, b){
     var x=a[0];
@@ -23,7 +23,7 @@ APoint.prototype.addAEdges = function(AEdgesAr){
   });
   //creates AEdge objects
   for (var i = 0; i < AEdgesAr.length; i++){
-    var newAEdge = new AEdge(AEdgesAr[i][0],AEdgesAr[i][1]);
+    var newAEdge = new AEdge(AEdgesAr[i][0],points[AEdgesAr[i][1]]);
     this.AEdges.push(newAEdge);
   }
 };
@@ -43,7 +43,7 @@ var ATriangulation = function(dataObj){
     this.points[point] = new APoint();
   }
   for (point in dataObj){
-    this.points[point].addAEdges(dataObj[point]);
+    this.points[point].addAEdges(dataObj[point], this.points);
   }
 };
 //To string method
@@ -54,3 +54,4 @@ ATriangulation.prototype.toString = function(){
   }
   return str;
 };
+
