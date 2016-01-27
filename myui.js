@@ -34,9 +34,13 @@ myui.getTrigFromPage = function(){
       atrig[pointIndex][i]=[newAngle, newPoint];
     }
   });
-  console.log(JSON.stringify(atrig));
   return atrig;
 };
 
-$( "#draw-btn" ).click(myui.getTrigFromPage);
+myui.drawATriangulation = function(){
+  ATriang = new ATriangulation(myui.getTrigFromPage());
+  console.log(ATriang.toString());
+};
+
+$( "#draw-btn" ).click(myui.drawATriangulation);
 })(myui);
