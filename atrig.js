@@ -4,22 +4,23 @@ var AEdge = function(angle, point){
   this.angle = angle;
   this.point = point;
 };
-//To String method
-AEdge.prototype.toString = function(){
-  return "Points with angle "+this.angle+" to point.";
-};
 
 //A-Point class
 var APoint = function(){
   this.AEdges = [];
 };
+//Method for setting cartesian coordinates
+APoint.prototype.setCartesian = function(x, y){
+  this.x=x;
+  this.y=y;
+};
 //Method that adds A-Edges from array of pairs to APoint, as AEdges objects.
 APoint.prototype.addAEdges = function(AEdgesAr, points){
   //sorts the array
   AEdgesAr.sort( function(a, b){
-    var x=a[0];
-    var y=b[0];
-    return x-y;
+    var i=a[0];
+    var j=b[0];
+    return i-j;
   });
   //creates AEdge objects
   for (var i = 0; i < AEdgesAr.length; i++){
