@@ -28,7 +28,7 @@ APoint.prototype.addAEdges = function(AEdgesAr, points){
   });
   //creates AEdge objects
   for (var i = 0; i < AEdgesAr.length; i++){
-    var newAEdge = new AEdge(AEdgesAr[i][0],points[AEdgesAr[i][1]-1]);
+    var newAEdge = new AEdge(AEdgesAr[i][0],AEdgesAr[i][1]-1);
     this.AEdges.push(newAEdge);
   }
 };
@@ -57,6 +57,26 @@ var ATriangulation = function(dataObj){
   for (point in dataObj){
     this.points[i++].addAEdges(dataObj[point], this.points);
   }
+};
+//Set cartesian coordinates of the first edge point of triangle.
+ATriangulation.prototype.setCartesianOfFirstPoint = function(point, edgePosition){
+  var distB = this.points[point.AEdges[edgePosition+1].point].distanceFrom(point);
+  var distC;
+  var anglea = point.AEdges[edgePosition+1].angle - point.AEdges[edgePosition].angle;
+  var angleb, anglec;
+  if (point.AEdges[edgePosition].point < point.AEdges[edgePosition+1].point){
+    angleb = point.AEdges[edgePosition].angle +
+      Math.PI - this.points[point.AEdges[edgePosition].point].AEdges[-1].angle;
+    anglec = Math.PI - anglea - angleb;
+  } else {
+    console.log(this.points[point.AEdges[edgePosition+1].point].AEdges[0].angle);
+    anglec = Math.PI - point.AEdges[edgePosition+1].angle +
+      this.points[point.AEdges[edgePosition+1].point].AEdges[0].angle;
+    angleb = Math.PI - anglea - anglec;
+  }
+  distC = distB*Math.sin(anglec)/Math.sin(angleb);
+  console.log("B="+distB+", C="+distC+", a="+anglea+"π, b"+angleb+"π, c"+anglec);
+  this.points[point.AEdges[edgePosition].point].setCartFromPED(point, edgePosition, distC);
 };
 //To string method
 ATriangulation.prototype.toString = function(){
