@@ -34,9 +34,9 @@ APoint.prototype.addAEdges = function(AEdgesAr, points){
 };
 // Set cartesian coordinates of this point from a point,
 // the edge between these points and the distance.
-APoint.prototype.setCartFromPED = function(point, edge, distance){
-  this.setCartesian(point.x+distance*Math.sin(edge.angle*Math.PI),
-                    point.y+distance*Math.cos(edge.angle*Math.PI));
+APoint.prototype.setCartFromPED = function(point, i, distance){
+  this.setCartesian(point.x+distance*Math.sin(point.AEdges[i].angle*Math.PI),
+                    point.y+distance*Math.cos(point.AEdges[i].angle*Math.PI));
 };
 //To String method
 APoint.prototype.toString = function(){
