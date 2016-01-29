@@ -14,6 +14,10 @@ APoint.prototype.setCartesian = function(x, y){
   this.x=x;
   this.y=y;
 };
+//Method that computes distance from this point to another
+APoint.prototype.distanceFrom = function(point){
+  return Math.sqrt(Math.pow(this.x-point.x,2)+Math.pow(this.y-point.y, 2));
+};
 //Method that adds A-Edges from array of pairs to APoint, as AEdges objects.
 APoint.prototype.addAEdges = function(AEdgesAr, points){
   //sorts the array
@@ -24,7 +28,7 @@ APoint.prototype.addAEdges = function(AEdgesAr, points){
   });
   //creates AEdge objects
   for (var i = 0; i < AEdgesAr.length; i++){
-    var newAEdge = new AEdge(AEdgesAr[i][0],points[AEdgesAr[i][1]]);
+    var newAEdge = new AEdge(AEdgesAr[i][0],points[AEdgesAr[i][1]-1]);
     this.AEdges.push(newAEdge);
   }
 };
@@ -39,12 +43,13 @@ APoint.prototype.toString = function(){
 
 //A-Triangulation class
 var ATriangulation = function(dataObj){
-  this.points = {};
+  this.points = [];
   for (var point in dataObj){
-    this.points[point] = new APoint();
+    this.points.push(new APoint());
   }
+  var i = 0;
   for (point in dataObj){
-    this.points[point].addAEdges(dataObj[point], this.points);
+    this.points[i++].addAEdges(dataObj[point], this.points);
   }
 };
 //To string method
