@@ -29,7 +29,7 @@ myui.getTrigFromPage = function(){
     s = $('#collapse'+(pointIndex)+ ' .form-inline');
     atrig[pointIndex]=[];
     for (var i=0; i<s.length; i++){
-      newAngle = parseFloat($('#angle', s[i]).val());
+      newAngle = parseFloat(eval($('#angle', s[i]).val()));
       newPoint = $('#point', s[i]).val();
       atrig[pointIndex][i]=[newAngle, newPoint];
     }
@@ -39,6 +39,8 @@ myui.getTrigFromPage = function(){
 
 myui.drawATriangulation = function(){
   ATriang = new ATriangulation(myui.getTrigFromPage());
+  ATriang.setCartesianOfPoints(200,200,100);
+  ATriang.drawTriangulation("myCanvas");
   console.log(ATriang);
 };
 

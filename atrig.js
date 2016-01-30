@@ -66,17 +66,74 @@ ATriangulation.prototype.setCartesianOfFirstPoint = function(point, edgePosition
   var angleb, anglec;
   if (point.AEdges[edgePosition].point < point.AEdges[edgePosition+1].point){
     angleb = point.AEdges[edgePosition].angle +
-      Math.PI - this.points[point.AEdges[edgePosition].point].AEdges[-1].angle;
-    anglec = Math.PI - anglea - angleb;
+      1 - this.points[point.AEdges[edgePosition].point].AEdges.slice(-1)[0].angle;
+    anglec = 1 - anglea - angleb;
   } else {
-    console.log(this.points[point.AEdges[edgePosition+1].point].AEdges[0].angle);
-    anglec = Math.PI - point.AEdges[edgePosition+1].angle +
+    anglec = 1 - point.AEdges[edgePosition+1].angle +
       this.points[point.AEdges[edgePosition+1].point].AEdges[0].angle;
-    angleb = Math.PI - anglea - anglec;
+    angleb = 1 - anglea - anglec;
   }
-  distC = distB*Math.sin(anglec)/Math.sin(angleb);
-  console.log("B="+distB+", C="+distC+", a="+anglea+"π, b"+angleb+"π, c"+anglec);
+  distC = distB*Math.sin(anglec*Math.PI)/Math.sin(angleb*Math.PI);
+  console.log("B="+distB+", C="+distC+", a="+anglea+"π, b="+angleb+"π, c="+anglec);
   this.points[point.AEdges[edgePosition].point].setCartFromPED(point, edgePosition, distC);
+};
+//Set cartesian coordinates of the first edge point of triangle.
+ATriangulation.prototype.setCartesianOfSecondPoint = function(point, edgePosition){
+  var distC = this.points[point.AEdges[edgePosition].point].distanceFrom(point);
+  var distB;
+  var anglea = point.AEdges[edgePosition+1].angle - point.AEdges[edgePosition].angle;
+  var angleb, anglec;
+  if (point.AEdges[edgePosition].point < point.AEdges[edgePosition+1].point){
+    angleb = point.AEdges[edgePosition].angle +
+      1 - this.points[point.AEdges[edgePosition].point].AEdges.slice(-1)[0].angle;
+    anglec = 1 - anglea - angleb;
+  } else {
+    anglec = 1 - point.AEdges[edgePosition+1].angle +
+      this.points[point.AEdges[edgePosition+1].point].AEdges[0].angle;
+    angleb = 1 - anglea - anglec;
+  }
+  distB = distC*Math.sin(angleb*Math.PI)/Math.sin(anglec*Math.PI);
+  console.log("B="+distB+", C="+distC+", a="+anglea+"π, b="+angleb+"π, c="+anglec);
+  this.points[point.AEdges[edgePosition+1].point].setCartFromPED(point, edgePosition+1, distB);
+};
+//Compute cartesian coordinates of the points of the triangulation
+//given the coordinates of the first point and the length of the first edge.
+ATriangulation.prototype.setCartesianOfPoints = function(x,y,length){
+  //Set cartesian coordinates of the first point
+  this.points[0].setCartesian(x,y);
+  //Set cartesian coordinates of the point of the first edge in distance length
+  this.points[this.points[0].AEdges[0].point].setCartFromPED(this.points[0],0,length);
+  this.setCartFromFirstEdge(this.points[0]);
+};
+//Set cartesian coordinates of the neighbouring points knowing the coordinates of first edge
+ATriangulation.prototype.setCartFromFirstEdge = function(point){
+  for (var i = 0; i<point.AEdges.length-1; i++){
+    this.setCartesianOfSecondPoint(point, i);
+    this.setCartFromFirstEdge(this.points[point.AEdges[i].point]);
+  }
+};
+//Set cartesian coordinates of the neighbouring points knowing the coordinates of last edge
+//ATriangulation.prototype.setCartFromLastEdge = function(point){
+//  for (var i = point.AEdges-2; i>=0; i++){
+//    this.setCartesianOfFirstPoint(point, i);
+//  }
+//};
+//Draw triangulation to canvas
+ATriangulation.prototype.drawTriangulation = function(canvasId){
+  var canvas = document.getElementById(canvasId);
+  var ctx = canvas.getContext("2d");
+  var startPoint, endPoint;
+  ctx.fillText(1,this.points[0].x-5,600-this.points[0].y-5);
+  for (var i = 0; i < this.points.length; i++){
+    for (var j = 0; j < this.points[i].AEdges.length; j++){
+      endPoint = this.points[this.points[i].AEdges[j].point];
+      startPoint = this.points[i];
+      ctx.moveTo(startPoint.x, 600-startPoint.y);
+      ctx.lineTo(endPoint.x, 600-endPoint.y);
+      ctx.fillText(this.points[i].AEdges[j].point+1,endPoint.x-5,600-endPoint.y-5);
+      ctx.stroke();
+    }
+  }
 };
 //To string method
 ATriangulation.prototype.toString = function(){
