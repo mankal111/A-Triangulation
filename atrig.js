@@ -99,6 +99,8 @@ ATriangulation.prototype.setCartesianOfSecondPoint = function(point, edgePositio
 //Compute cartesian coordinates of the points of the triangulation
 //given the coordinates of the first point and the length of the first edge.
 ATriangulation.prototype.setCartesianOfPoints = function(x,y,length){
+  //Check the restrictions
+  this.checkRestrictions();
   //Set cartesian coordinates of the first point
   this.points[0].setCartesian(x,y);
   //Set cartesian coordinates of the point of the first edge in distance length
@@ -122,6 +124,8 @@ ATriangulation.prototype.setCartFromFirstEdge = function(point){
 ATriangulation.prototype.drawTriangulation = function(canvasId){
   var canvas = document.getElementById(canvasId);
   var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
   var startPoint, endPoint;
   ctx.fillText(1,this.points[0].x-5,600-this.points[0].y-5);
   for (var i = 0; i < this.points.length; i++){
@@ -132,6 +136,15 @@ ATriangulation.prototype.drawTriangulation = function(canvasId){
       ctx.lineTo(endPoint.x, 600-endPoint.y);
       ctx.fillText(this.points[i].AEdges[j].point+1,endPoint.x-5,600-endPoint.y-5);
       ctx.stroke();
+    }
+  }
+};
+//Check restrictions method
+ATriangulation.prototype.checkRestrictions = function(){
+  for (var i = 0; i < this.points.length; i++){
+    var point = this.points[i];
+    for (var j = 0; j < point.AEdges.length; j++){
+      if (point.AEdges[j].angle <= 0 || point.AEdges[j].angle > 1) throw "At point "+(i+1)+", edge "+(j+1)+": The angle must be in the interval (0,π].";
     }
   }
 };

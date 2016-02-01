@@ -39,8 +39,15 @@ myui.getTrigFromPage = function(){
 
 myui.drawATriangulation = function(){
   ATriang = new ATriangulation(myui.getTrigFromPage());
-  ATriang.setCartesianOfPoints(200,200,100);
-  ATriang.drawTriangulation("myCanvas");
+  try {
+    ATriang.setCartesianOfPoints(parseInt($( '#firstPointX' ).val()),
+                                 parseInt($( '#firstPointY' ).val()),
+                                parseInt($( '#firstEdgeLength' ).val()));
+    ATriang.drawTriangulation("myCanvas");
+  }
+  catch(err) {
+    console.log(err);
+  }
   console.log(ATriang);
 };
 
