@@ -37,6 +37,8 @@ myui.loadDataToPage = function(dataObj){
       $("#collapse"+points+"").children("div:first").before('<form class="form-inline" class="apEntry" role="form"><div class="form-group"><label for="angle"><h5>Angle:</label><input type="text" class="form-control" id="angle" size="5" value="'+dataObj[point][i][0]+'">π</h5></div>&nbsp;<div class="form-group"><label for="point"><h5>Point:</label><input type="number" class="form-control" id="point" maxlength="4" style="width:100px" value="'+dataObj[point][i][1]+'"></h5></div></form>');
     }
   }
+  myui.getTrigFromPage();
+  myui.drawATriangulation();
 };
 
 myui.getTrigFromPage = function(){
@@ -82,5 +84,7 @@ myui.clear = function(){
 };
 
 $( "#clear-btn" ).click(myui.clear);
+
+$( "#example-1-btn" ).click(function(){myui.loadDataToPage({1: [[1,2],[1/2,3]], 2: [[1/4,3]], 3:[]});});
 
 })(myui);
