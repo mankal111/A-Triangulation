@@ -87,6 +87,6 @@ $( "#clear-btn" ).click(myui.clear);
 
 $( "#example-1-btn" ).click(function(){myui.loadDataToPage({1: [[1,2],[1/2,3]], 2: [[1/4,3]], 3:[]});});
 
-$( "#example-2-btn" ).click(function(){myui.loadDataToPage({1: [[1/2,3],[1,2]], 2: [[1/4,3],[1/2,4]], 3:[[1,4]], 4:[]});});
+$( "#example-2-btn" ).click(function(){myui.loadDataToPage({1: [[1/3,3],[8/9,2]], 2: [[1/4,3],[1/2,4]], 3:[[6/7,4]], 4:[]});});
 
 })(myui);
