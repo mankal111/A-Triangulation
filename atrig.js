@@ -111,7 +111,7 @@ ATriangulation.prototype.setCartesianOfPoints = function(x,y,length){
 ATriangulation.prototype.setCartFromFirstEdge = function(point){
   for (var i = 0; i<point.AEdges.length-1; i++){
     this.setCartesianOfSecondPoint(point, i);
-    this.setCartFromFirstEdge(this.points[point.AEdges[i].point]);
+    this.setCartFromFirstEdge(this.points[point.AEdges[i+1].point]);
   }
 };
 //Set cartesian coordinates of the neighbouring points knowing the coordinates of last edge
