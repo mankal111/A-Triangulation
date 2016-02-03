@@ -15,6 +15,8 @@ myui.addPoint = function(){
   $( "#del-pair-btn"+points+"" ).click(function(){
     $(this).parents("div:first").prev().remove();
   });
+
+  return this;
 };
 
 $( "#new-point-btn" ).click(myui.addPoint);
@@ -31,6 +33,9 @@ myui.loadDataToPage = function(dataObj){
   myui.clear();
   for (var point in dataObj){
     myui.addPoint();
+    for (var i = 0; i < dataObj[point].length; i++){
+      $("#collapse"+points+"").children("div:first").before('<form class="form-inline" class="apEntry" role="form"><div class="form-group"><label for="angle"><h5>Angle:</label><input type="text" class="form-control" id="angle" size="5" value="'+dataObj[point][i][0]+'">π</h5></div>&nbsp;<div class="form-group"><label for="point"><h5>Point:</label><input type="number" class="form-control" id="point" maxlength="4" style="width:100px" value="'+dataObj[point][i][1]+'"></h5></div></form>');
+    }
   }
 };
 
