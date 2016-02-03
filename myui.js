@@ -5,7 +5,7 @@ var points = 0;
 
 $('#alertMsg').hide();
 
-$( "#new-point-btn" ).click(function(){
+myui.addPoint = function(){
   points++;
   $( "#accordion" ).append('<div class="panel panel-default" id="panel'+points+'"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse'+points+'">Point '+points+'</a></h4></div><div id="collapse'+points+'" class="panel-collapse collapse"><div class="panel-body"><a id="new-pair-btn'+points+'" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span>Add angle-point pair</a><a id="del-pair-btn'+points+'" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span>Delete pair</a></div></div></div>');
   $( "#new-pair-btn"+points+"" ).click(function(){
@@ -15,7 +15,9 @@ $( "#new-point-btn" ).click(function(){
   $( "#del-pair-btn"+points+"" ).click(function(){
     $(this).parents("div:first").prev().remove();
   });
-});
+};
+
+$( "#new-point-btn" ).click(myui.addPoint);
 
 $( "#del-point-btn" ).click(function(){
   if (points>0){
@@ -23,6 +25,13 @@ $( "#del-point-btn" ).click(function(){
     points--;
   }
 });
+
+//loads data from obj to page
+myui.loadDataToPage = function(dataObj){
+  for (var point in dataObj){
+    myui.addPoint();
+  }
+};
 
 myui.getTrigFromPage = function(){
   atrig = {};
