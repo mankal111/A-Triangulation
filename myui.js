@@ -28,6 +28,7 @@ $( "#del-point-btn" ).click(function(){
 
 //loads data from obj to page
 myui.loadDataToPage = function(dataObj){
+  myui.clear();
   for (var point in dataObj){
     myui.addPoint();
   }
