@@ -3,6 +3,8 @@ myui = {};
 (function(myui){
 var points = 0;
 
+$('#alertMsg').hide();
+
 $( "#new-point-btn" ).click(function(){
   points++;
   $( "#accordion" ).append('<div class="panel panel-default" id="panel'+points+'"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse'+points+'">Point '+points+'</a></h4></div><div id="collapse'+points+'" class="panel-collapse collapse"><div class="panel-body"><a id="new-pair-btn'+points+'" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span>Add angle-point pair</a><a id="del-pair-btn'+points+'" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span>Delete pair</a></div></div></div>');
@@ -47,11 +49,23 @@ myui.drawATriangulation = function(){
     ATriang.drawTriangulation("myCanvas");
   }
   catch(err) {
-    document.getElementById("alertMsg").innerHTML = "<h3>"+err+"</h3>";
+    document.getElementById("alertMsg").innerHTML = "<h5>"+err+"</h5>";
     $('#alertMsg').show();
   }
   console.log(ATriang);
 };
 
 $( "#draw-btn" ).click(myui.drawATriangulation);
+
+myui.clear = function(){
+  document.getElementById( "accordion" ).innerHTML ="";
+  points = 0;
+  var canvas = document.getElementById("myCanvas");
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+};
+
+$( "#clear-btn" ).click(myui.clear);
+
 })(myui);

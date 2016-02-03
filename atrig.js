@@ -144,7 +144,9 @@ ATriangulation.prototype.checkRestrictions = function(){
   for (var i = 0; i < this.points.length; i++){
     var point = this.points[i];
     for (var j = 0; j < point.AEdges.length; j++){
-      if (point.AEdges[j].angle <= 0 || point.AEdges[j].angle > 1) throw "At point "+(i+1)+", edge "+(j+1)+": The angle must be in the interval (0,π].";
+      if (point.AEdges[j].angle <= 0 || point.AEdges[j].angle > 1) throw "At point "+(i+1)+": The angles must be in the interval (0,π].";
+      if (point.AEdges[j].point < 0 || point.AEdges[j].point >= this.points.length) throw "At point "+(i+1)+": The angle-point pairs must point to an existing point.";
+      if ( i >= point.AEdges[j].point) throw "At point "+(i+1)+": The angle-point pairs should not point to a previous point, since in that case we need an angle bigger than π.";
     }
   }
 };
