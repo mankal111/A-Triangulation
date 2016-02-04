@@ -59,16 +59,16 @@ myui.getTrigFromPage = function(){
 myui.drawATriangulation = function(){
   ATriang = new ATriangulation(myui.getTrigFromPage());
   $('#alertMsg').hide();
-  try {
+  //try {
     ATriang.setCartesianOfPoints(parseInt($( '#firstPointX' ).val()),
                                  parseInt($( '#firstPointY' ).val()),
                                 parseInt($( '#firstEdgeLength' ).val()));
     ATriang.drawTriangulation("myCanvas");
-  }
-  catch(err) {
-    document.getElementById("alertMsg").innerHTML = "<h5>"+err+"</h5>";
-    $('#alertMsg').show();
-  }
+  //}
+  //catch(err) {
+  //  document.getElementById("alertMsg").innerHTML = "<h5>"+err+"</h5>";
+  //  $('#alertMsg').show();
+  //}
   console.log(ATriang);
 };
 
@@ -88,5 +88,7 @@ $( "#clear-btn" ).click(myui.clear);
 $( "#example-1-btn" ).click(function(){myui.loadDataToPage({1: [['1',2],['1/2',3]], 2: [['1/4',3]], 3:[]});});
 
 $( "#example-2-btn" ).click(function(){myui.loadDataToPage({1: [['1/3',3],['8/9',2]], 2: [['1/4',3],['1/2',4]], 3:[['6/7',4]], 4:[]});});
+
+$( "#example-4-btn" ).click(function(){myui.loadDataToPage({1: [['1/4',2],['3/4',3]], 2: [['3/4',4],['1',3]], 3:[['1/4',4],['1/2',6]], 4:[['1/4',5],['3/4',6]], 5:[[1,6]],6:[]});});
 
 })(myui);

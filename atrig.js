@@ -50,6 +50,7 @@ APoint.prototype.toString = function(){
 //A-Triangulation class
 var ATriangulation = function(dataObj){
   this.points = [];
+  this.pointsLeft =[0];
   for (var point in dataObj){
     this.points.push(new APoint());
   }
@@ -105,21 +106,37 @@ ATriangulation.prototype.setCartesianOfPoints = function(x,y,length){
   this.points[0].setCartesian(x,y);
   //Set cartesian coordinates of the point of the first edge in distance length
   this.points[this.points[0].AEdges[0].point].setCartFromPED(this.points[0],0,length);
-  this.setCartFromFirstEdge(this.points[0]);
+  this.pointsLeft.push(this.points[0].AEdges[0].point);
+  while (this.pointsLeft.length > 1){
+    console.log(this.pointsLeft);
+    var pointIndex = this.pointsLeft.shift();
+    console.log(pointIndex);
+    var point = this.points[pointIndex];
+    if (point.AEdges.length !== 0){
+      if (this.points[point.AEdges[0].point].hasOwnProperty("x")){
+        this.setCartFromFirstEdge(point);
+      } else if (this.points[point.AEdges.slice(-1)[0].point].hasOwnProperty("x")){
+        this.setCartFromLastEdge(point);
+      } else {
+        this.pointsLeft.push(pointIndex);
+      }
+    }
+  }
 };
 //Set cartesian coordinates of the neighbouring points knowing the coordinates of first edge
 ATriangulation.prototype.setCartFromFirstEdge = function(point){
   for (var i = 0; i<point.AEdges.length-1; i++){
     this.setCartesianOfSecondPoint(point, i);
-    this.setCartFromFirstEdge(this.points[point.AEdges[i+1].point]);
+    if (!(point.AEdges[i+1].point in this.pointsLeft)) this.pointsLeft.push(point.AEdges[i+1].point);
   }
 };
 //Set cartesian coordinates of the neighbouring points knowing the coordinates of last edge
-//ATriangulation.prototype.setCartFromLastEdge = function(point){
-//  for (var i = point.AEdges-2; i>=0; i++){
-//    this.setCartesianOfFirstPoint(point, i);
-//  }
-//};
+ATriangulation.prototype.setCartFromLastEdge = function(point){
+  for (var i = point.AEdges.length-2; i>=0; i--){
+    this.setCartesianOfFirstPoint(point, i);
+    if (!(point.AEdges[i].point in this.pointsLeft)) this.pointsLeft.push(point.AEdges[i].point);
+  }
+};
 //Draw triangulation to canvas
 ATriangulation.prototype.drawTriangulation = function(canvasId){
   var canvas = document.getElementById(canvasId);
