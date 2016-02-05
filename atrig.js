@@ -75,7 +75,7 @@ ATriangulation.prototype.setCartesianOfFirstPoint = function(point, edgePosition
     angleb = 1 - anglea - anglec;
   }
   distC = distB*Math.sin(anglec*Math.PI)/Math.sin(angleb*Math.PI);
-  console.log("B="+distB+", C="+distC+", a="+anglea+"π, b="+angleb+"π, c="+anglec);
+  //console.log("B="+distB+", C="+distC+", a="+anglea+"π, b="+angleb+"π, c="+anglec);
   this.points[point.AEdges[edgePosition].point].setCartFromPED(point, edgePosition, distC);
 };
 //Set cartesian coordinates of the first edge point of triangle.
