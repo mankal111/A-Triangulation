@@ -59,17 +59,16 @@ myui.getTrigFromPage = function(){
 myui.drawATriangulation = function(){
   ATriang = new ATriangulation(myui.getTrigFromPage());
   $('#alertMsg').hide();
-  //try {
+  try {
     ATriang.setCartesianOfPoints(parseInt($( '#firstPointX' ).val()),
                                  parseInt($( '#firstPointY' ).val()),
                                 parseInt($( '#firstEdgeLength' ).val()));
     ATriang.drawTriangulation("myCanvas");
-  //}
-  //catch(err) {
-  //  document.getElementById("alertMsg").innerHTML = "<h5>"+err+"</h5>";
-  //  $('#alertMsg').show();
-  //}
-  console.log(ATriang);
+  }
+  catch(err) {
+    document.getElementById("alertMsg").innerHTML = "<h5>"+err+"</h5>";
+    $('#alertMsg').show();
+  }
 };
 
 $( "#draw-btn" ).click(myui.drawATriangulation);
