@@ -94,7 +94,7 @@ ATriangulation.prototype.setCartesianOfSecondPoint = function(point, edgePositio
     angleb = 1 - anglea - anglec;
   }
   distB = distC*Math.sin(angleb*Math.PI)/Math.sin(anglec*Math.PI);
-  console.log("B="+distB+", C="+distC+", a="+anglea+"π, b="+angleb+"π, c="+anglec);
+  //console.log("B="+distB+", C="+distC+", a="+anglea+"π, b="+angleb+"π, c="+anglec);
   this.points[point.AEdges[edgePosition+1].point].setCartFromPED(point, edgePosition+1, distB);
 };
 //Compute cartesian coordinates of the points of the triangulation
@@ -108,9 +108,7 @@ ATriangulation.prototype.setCartesianOfPoints = function(x,y,length){
   this.points[this.points[0].AEdges[0].point].setCartFromPED(this.points[0],0,length);
   this.pointsLeft.push(this.points[0].AEdges[0].point);
   while (this.pointsLeft.length > 1){
-    console.log(this.pointsLeft);
     var pointIndex = this.pointsLeft.shift();
-    console.log(pointIndex);
     var point = this.points[pointIndex];
     if (point.AEdges.length !== 0){
       if (this.points[point.AEdges[0].point].hasOwnProperty("x")){
