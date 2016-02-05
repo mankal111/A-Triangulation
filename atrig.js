@@ -162,6 +162,14 @@ ATriangulation.prototype.checkRestrictions = function(){
       if (point.AEdges[j].angle <= 0 || point.AEdges[j].angle > 1) throw "At point "+(i+1)+": The angles must be in the interval (0,π].";
       if (point.AEdges[j].point < 0 || point.AEdges[j].point >= this.points.length) throw "At point "+(i+1)+": The angle-point pairs must point to an existing point.";
       if ( i >= point.AEdges[j].point) throw "At point "+(i+1)+": The angle-point pairs should not point to a previous point, since in that case we need an angle bigger than π.";
+      if (j < point.AEdges.length - 1)
+        if (point.AEdges[j].point < point.AEdges[j+1].point){
+          if (this.points[point.AEdges[j].point].AEdges.slice(-1)[0].point !== point.AEdges[j+1].point)
+            throw "Two consecutive angle-point pairs must form a triangle. The angle-point pair, with the largest angle, of "+(point.AEdges[j].point+1)+" should point to point "+(point.AEdges[j+1].point+1)+".";
+        } else {
+          if (this.points[point.AEdges[j+1].point].AEdges[0].point !== point.AEdges[j].point)
+            throw "Two consecutive angle-point pairs must form a triangle. The angle-point pair, with the smallest angle, of "+(point.AEdges[j+1].point+1)+" should point to point "+(point.AEdges[j].point+1)+".";
+        }
     }
   }
 };
