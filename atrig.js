@@ -166,9 +166,13 @@ ATriangulation.prototype.checkRestrictions = function(){
         if (point.AEdges[j].point < point.AEdges[j+1].point){
           if (this.points[point.AEdges[j].point].AEdges.slice(-1)[0].point !== point.AEdges[j+1].point)
             throw "Two consecutive angle-point pairs must form a triangle. The angle-point pair, with the largest angle, of "+(point.AEdges[j].point+1)+" should point to point "+(point.AEdges[j+1].point+1)+".";
+          if (this.points[point.AEdges[j].point].AEdges.slice(-1)[0].angle <= point.AEdges[j+1].angle)
+            throw "The angle of the angle-point pair of point "+(i+1)+" that points to point "+(point.AEdges[j+1].point+1)+", must be smaller than the angle of the angle-point pair of point "+(point.AEdges[j].point+1)+" that points to point "+(point.AEdges[j+1].point+1)+", or else they will never meet to that point.";
         } else {
           if (this.points[point.AEdges[j+1].point].AEdges[0].point !== point.AEdges[j].point)
             throw "Two consecutive angle-point pairs must form a triangle. The angle-point pair, with the smallest angle, of "+(point.AEdges[j+1].point+1)+" should point to point "+(point.AEdges[j].point+1)+".";
+          if (this.points[point.AEdges[j+1].point].AEdges[0].angle >= point.AEdges[j].angle)
+            throw "The angle of the angle-point pair of point "+(i+1)+" that points to point "+(point.AEdges[j].point+1)+", must be larger than the angle of the angle-point pair of point "+(point.AEdges[j+1].point+1)+" that points to point "+(point.AEdges[j].point+1)+", or else they will never meet to that point.";
         }
     }
   }
