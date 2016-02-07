@@ -161,9 +161,9 @@ ATriangulation.prototype.checkRestrictions = function(){
   for (var i = pointsVisited.length-1; i >= 0; -- i) pointsVisited[i] = 0;
   pointsVisited[0] = 1;
 
-  for (i = 0; i < this.points.length-1; i++){
-    if (this.points[i].AEdges.length < 1) throw "Point "+(i+1)+" must have at least one angle-point pair. Only the last point does not have angle-point pairs.";
-  }
+  //for (i = 0; i < this.points.length-1; i++){
+  //  if (this.points[i].AEdges.length < 1) throw "Point "+(i+1)+" must have at least one angle-point pair. Only the last point does not have angle-point pairs.";
+  //}
 
   for (i = 0; i < this.points.length-1; i++){
     var point = this.points[i];
@@ -177,15 +177,23 @@ ATriangulation.prototype.checkRestrictions = function(){
       if ( i >= point.AEdges[j].point) throw "At point "+(i+1)+": The angle-point pairs should not point to a previous point, since in that case we need an angle bigger than π.";
       if (j < point.AEdges.length - 1)
         if (point.AEdges[j].point < point.AEdges[j+1].point){
-          if (this.points[point.AEdges[j].point].AEdges.slice(-1)[0].point !== point.AEdges[j+1].point)
-            throw "Two consecutive angle-point pairs must form a triangle. The angle-point pair with the largest angle of "+(point.AEdges[j].point+1)+", should point to point "+(point.AEdges[j+1].point+1)+".";
-          if (this.points[point.AEdges[j].point].AEdges.slice(-1)[0].angle <= point.AEdges[j+1].angle)
-            throw "The angle of the angle-point pair of point "+(i+1)+" that points to point "+(point.AEdges[j+1].point+1)+", must be smaller than the angle of the angle-point pair of point "+(point.AEdges[j].point+1)+" that points to point "+(point.AEdges[j+1].point+1)+", or else they will never meet to that point.";
+          if (this.points[point.AEdges[j].point].AEdges.length !== 0){
+            if (this.points[point.AEdges[j].point].AEdges.slice(-1)[0].point !== point.AEdges[j+1].point)
+              throw "Two consecutive angle-point pairs must form a triangle. The angle-point pair with the largest angle of "+(point.AEdges[j].point+1)+", should point to point "+(point.AEdges[j+1].point+1)+".";
+            if (this.points[point.AEdges[j].point].AEdges.slice(-1)[0].angle <= point.AEdges[j+1].angle)
+              throw "The angle of the angle-point pair of point "+(i+1)+" that points to point "+(point.AEdges[j+1].point+1)+", must be smaller than the angle of the angle-point pair of point "+(point.AEdges[j].point+1)+" that points to point "+(point.AEdges[j+1].point+1)+", or else they will never meet to that point.";
+          } else {
+            throw "Two consecutive angle-point pairs must form a triangle. There should be an angle-point pair on point "+(point.AEdges[j].point+1)+", that points to point "+(point.AEdges[j+1].point+1)+".";
+          }
         } else {
-          if (this.points[point.AEdges[j+1].point].AEdges[0].point !== point.AEdges[j].point)
-            throw "Two consecutive angle-point pairs must form a triangle. The angle-point pair with the smallest angle of "+(point.AEdges[j+1].point+1)+", should point to point "+(point.AEdges[j].point+1)+".";
-          if (this.points[point.AEdges[j+1].point].AEdges[0].angle >= point.AEdges[j].angle)
-            throw "The angle of the angle-point pair of point "+(i+1)+" that points to point "+(point.AEdges[j].point+1)+", must be larger than the angle of the angle-point pair of point "+(point.AEdges[j+1].point+1)+" that points to point "+(point.AEdges[j].point+1)+", or else they will never meet to that point.";
+          if (this.points[point.AEdges[j+1].point].AEdges.length !== 0){
+            if (this.points[point.AEdges[j+1].point].AEdges[0].point !== point.AEdges[j].point)
+              throw "Two consecutive angle-point pairs must form a triangle. The angle-point pair with the smallest angle of "+(point.AEdges[j+1].point+1)+", should point to point "+(point.AEdges[j].point+1)+".";
+            if (this.points[point.AEdges[j+1].point].AEdges[0].angle >= point.AEdges[j].angle)
+              throw "The angle of the angle-point pair of point "+(i+1)+" that points to point "+(point.AEdges[j].point+1)+", must be larger than the angle of the angle-point pair of point "+(point.AEdges[j+1].point+1)+" that points to point "+(point.AEdges[j].point+1)+", or else they will never meet to that point.";
+          } else {
+            throw "Two consecutive angle-point pairs must form a triangle. There should be an angle-point pair on point "+(point.AEdges[j+1].point+1)+", that points to point "+(point.AEdges[j].point+1)+".";
+          }
         }
     }
   }
