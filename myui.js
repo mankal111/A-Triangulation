@@ -77,7 +77,7 @@ myui.drawATriangulation = function(){
   }
 
   try {
-    //warning tests
+    ATriang.checkBorder();
   }
   catch(err){
     document.getElementById("warningMsg").innerHTML = "<h5>"+err+"</h5>";

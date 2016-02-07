@@ -198,6 +198,25 @@ ATriangulation.prototype.checkRestrictions = function(){
       throw "The point "+(i+1)+" is not connected with the first point. There must be a path that begins from the first point and ends to that point.";
     }
 };
+//Check if the border of the triangulation is that of a convex shape
+ATriangulation.prototype.checkBorder = function(){
+  //initialize pointIndex to first point
+  var pointIndex = 0;
+  while (this.points[pointIndex].AEdges[0].point !== this.points.length-1){
+    if (this.points[this.points[pointIndex].AEdges[0].point].AEdges[0].angle < this.points[pointIndex].AEdges[0].angle){
+      throw "The angles of the upper border of a convex triangulation should be ascending. For that reason the resulting triangulation is not convex at the point "+(this.points[pointIndex].AEdges[0].point+1)+".";
+    }
+    pointIndex = this.points[pointIndex].AEdges[0].point;
+  }
+
+  pointIndex = 0;
+  while (this.points[pointIndex].AEdges.slice(-1)[0].point !== this.points.length-1){
+    if (this.points[this.points[pointIndex].AEdges.slice(-1)[0].point].AEdges.slice(-1)[0].angle > this.points[pointIndex].AEdges.slice(-1)[0].angle){
+      throw "The angles of the upper border of a convex triangulation should be ascending. For that reason the resulting triangulation is not convex at the point "+(this.points[pointIndex].AEdges.slice(-1)[0].point+1)+".";
+    }
+    pointIndex = this.points[pointIndex].AEdges.slice(-1)[0].point;
+  }
+};
 //To string method
 ATriangulation.prototype.toString = function(){
   var str = "";
