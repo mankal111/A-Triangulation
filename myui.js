@@ -5,7 +5,7 @@ var points = 0;
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-$('#alertMsg').hide();
+$('#errorMsg').hide();
 
 myui.addPoint = function(){
   points++;
@@ -60,7 +60,7 @@ myui.getTrigFromPage = function(){
 
 myui.drawATriangulation = function(){
   ATriang = new ATriangulation(myui.getTrigFromPage());
-  $('#alertMsg').hide();
+  $('#errorMsg').hide();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
   try {
@@ -70,8 +70,8 @@ myui.drawATriangulation = function(){
     ATriang.drawTriangulation("myCanvas");
   }
   catch(err) {
-    document.getElementById("alertMsg").innerHTML = "<h5>"+err+"</h5>";
-    $('#alertMsg').show();
+    document.getElementById("errorMsg").innerHTML = "<h5>"+err+"</h5>";
+    $('#errorMsg').show();
   }
 };
 
