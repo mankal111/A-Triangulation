@@ -2,6 +2,8 @@ myui = {};
 
 (function(myui){
 var points = 0;
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
 
 $('#alertMsg').hide();
 
@@ -59,6 +61,8 @@ myui.getTrigFromPage = function(){
 myui.drawATriangulation = function(){
   ATriang = new ATriangulation(myui.getTrigFromPage());
   $('#alertMsg').hide();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
   try {
     ATriang.setCartesianOfPoints(parseInt($( '#firstPointX' ).val()),
                                  parseInt($( '#firstPointY' ).val()),
@@ -76,8 +80,6 @@ $( "#draw-btn" ).click(myui.drawATriangulation);
 myui.clear = function(){
   document.getElementById( "accordion" ).innerHTML ="";
   points = 0;
-  var canvas = document.getElementById("myCanvas");
-  var ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
 };
