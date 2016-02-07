@@ -161,10 +161,6 @@ ATriangulation.prototype.checkRestrictions = function(){
   for (var i = pointsVisited.length-1; i >= 0; -- i) pointsVisited[i] = 0;
   pointsVisited[0] = 1;
 
-  //for (i = 0; i < this.points.length-1; i++){
-  //  if (this.points[i].AEdges.length < 1) throw "Point "+(i+1)+" must have at least one angle-point pair. Only the last point does not have angle-point pairs.";
-  //}
-
   for (i = 0; i < this.points.length-1; i++){
     var point = this.points[i];
 
