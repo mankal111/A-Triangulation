@@ -212,7 +212,7 @@ ATriangulation.prototype.checkBorder = function(){
   pointIndex = 0;
   while (this.points[pointIndex].AEdges.slice(-1)[0].point !== this.points.length-1){
     if (this.points[this.points[pointIndex].AEdges.slice(-1)[0].point].AEdges.slice(-1)[0].angle > this.points[pointIndex].AEdges.slice(-1)[0].angle){
-      throw "The angles of the upper border of a convex triangulation should be ascending. For that reason the resulting triangulation is not convex at the point "+(this.points[pointIndex].AEdges.slice(-1)[0].point+1)+".";
+      throw "The angles of the lower border of a convex triangulation should be descending. For that reason the resulting triangulation is not convex at the point "+(this.points[pointIndex].AEdges.slice(-1)[0].point+1)+".";
     }
     pointIndex = this.points[pointIndex].AEdges.slice(-1)[0].point;
   }
